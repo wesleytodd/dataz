@@ -31,7 +31,7 @@ An instance of the data class also has safe setters:
 
 ```javascript
 var d = new Dataz();
-d.set('foo:bar:baz', 'fooBarBaz);
+d.set('foo:bar:baz', 'fooBarBaz');
 d.get('foo:bar:baz'); // 'fooBarBaz'
 ```
 
