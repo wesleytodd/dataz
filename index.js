@@ -1,4 +1,4 @@
-var _defaults = require('lodash.defaults');
+var _defaults = require('lodash.defaults'),
 	_assign = require('lodash.assign'),
 	_merge = require('lodash.merge'),
 	_noop = require('lodash.noop'),
