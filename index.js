@@ -3,6 +3,8 @@ var _defaults = require('lodash.defaults'),
 	_merge = require('lodash.merge'),
 	_noop = require('lodash.noop'),
 	_create = require('lodash.create'),
+	recursiveEscape = require('recursive-escape'),
+	recursiveUnEscape = require('recursive-unescape'),
 	EventEmitter = require('events').EventEmitter;
 
 var Dataz = module.exports = function(options) {
@@ -19,7 +21,7 @@ Dataz.prototype = _create(EventEmitter.prototype, {constructor: Dataz});
 Dataz.defaults = {
 	delimiter: ':',
 	data: null,
-	emitChangeEvents: true
+	emitChangeEvents: false
 };
 
 Dataz.extend = function(options) {
@@ -96,6 +98,13 @@ Dataz.prototype.set = function(key, val) {
 	return o;
 };
 
+Dataz.prototype.unescapeSet = function(key, val) {
+	if (typeof val === 'undefined') {
+		return this.set(recursiveUnEscape(key));
+	}
+	return this.set(key, recursiveUnEscape(val));
+};
+
 Dataz.prototype.extend = function() {
 	var args = Array.prototype.slice.call(arguments);
 	args.unshift(this.data);
@@ -110,4 +119,9 @@ Dataz.prototype.merge = function() {
 
 Dataz.prototype.toJSON = function(stringify) {
 	return stringify ? JSON.stringify(this.data) : this.data;
+};
+
+Dataz.prototype.escape = function(stringify) {
+	var d = recursiveEscape(this.data);
+	return stringify ? JSON.stringify(d) : d;
 };

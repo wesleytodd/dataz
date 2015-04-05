@@ -212,5 +212,23 @@ describe('Dataz', function() {
 		});
 		
 	});
+
+	describe('Escape/Unescape', function() {
+
+		it('should escape data', function() {
+			d.set({
+				foo: 'My <span>html</span> string.'
+			});
+			assert(d.escape().foo === 'My &lt;span&gt;html&lt;/span&gt; string.');
+		});
+
+		it('should unescape and set data', function() {
+			d.unescapeSet({
+				foo: 'My &lt;span&gt;html&lt;/span&gt; string.'
+			});
+			assert(d.toJSON().foo === 'My <span>html</span> string.');
+		});
+
+	});
 });
 
